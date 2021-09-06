@@ -1,4 +1,4 @@
-# For VEN version 21.2 and above
+# For VEN version 21.2 and above (For Linux Only)
 
 # 1. ven-control 
 Syntax with private key: 
