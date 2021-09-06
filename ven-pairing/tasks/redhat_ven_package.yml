@@ -1,0 +1,44 @@
+---
+- name: "Check if VEN package is installed or not on RedHat Linux family"
+  command: rpm -q "{{ item }}"
+  loop: "{{ package_names }}"
+  register: ven_package_check
+  failed_when: ven_package_check.rc > 0
+  changed_when: ven_package_check.rc > 0
+  when: ansible_facts['distribution'] == "RedHat" or
+      ansible_facts['distribution'] == "CentOS" 
+  ignore_errors: True
+  become: true
+
+- name: "Check if OS Package Dependencies when no VEN installed"
+  command: rpm -q "{{ item }}"
+  loop: "{{ redhat_dependency_names }}"
+  register: dependeny_check
+  when: ven_package_check is failed
+  failed_when: dependeny_check.rc > 0
+  changed_when: dependeny_check.rc > 0
+  become: true
+
+
+- name: "Run VEN pairing script"
+  block:
+    - name: "Copy VEN pairing script"
+      template:
+        src: ./pairing_script.sh
+        dest: /tmp/pairing_script.sh
+        mode: "774"
+      become: true
+      tags:
+        - ven_pairingscript
+
+    - name: "Run pairing script"
+      shell: ./pairing_script.sh
+      args:
+        chdir: /tmp/
+        creates: /opt/illumio_ven/illumio-ven-ctl
+      become: true
+      tags:
+        - ven_pairingscript
+    
+    - include: ../ven-control/tasks/ven_status.yml
+  when: ven_package_check is failed

@@ -1,0 +1,46 @@
+---
+- name: "Check if VEN package is installed or not on Ubuntu Linux family"
+  command: dpkg-query -l "{{ item }}"
+  with_items: "{{ package_names }}"
+  register: ven_package_check
+  when: ansible_facts['distribution'] == "Ubuntu"
+  failed_when: ven_package_check.rc > 0
+  changed_when: ven_package_check.rc > 0
+  ignore_errors: True
+  become: true
+
+- name: "Check OS packages dependencies on workloads that going to install VEN"
+  command: dpkg-query -l "{{ item }}"
+  with_items: "{{ ubuntu_dependency_names }}"
+  register: dependency_check
+  failed_when: dependency_check.rc > 0
+  changed_when: dependency_check.rc > 0
+  when: ven_package_check is failed
+  become: true
+
+- name: "Run VEN pairing script"
+  block:
+    - name: "Copy VEN pairing script"
+      template:
+        src: ./pairing_script.sh
+        dest: /tmp/pairing_script.sh
+        mode: "774"
+      become: true
+      tags:
+        - ven_pairingscript
+
+    - name: "Run pairing script"
+      shell: ./pairing_script.sh
+      args:
+        chdir: /tmp/
+        creates: /opt/illumio_ven/illumio-ven-ctl
+      become: true
+      tags:
+        - ven_pairingscript
+    
+    - include: ../ven-control/tasks/ven_status.yml
+  when: ven_package_check is failed
+
+# Add proxy
+# env | grep -i http_proxy | awk -F '[/:]' '{print $4":"$5}'
+# export HTTP_PROXY=http://172.16.3.250:3128

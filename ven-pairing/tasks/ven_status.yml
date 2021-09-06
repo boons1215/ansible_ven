@@ -1,0 +1,33 @@
+---
+# task file for VEN status 
+- name: "Check VEN status"
+  block:
+    - name: "VEN status check"
+      shell: "/opt/illumio_ven/illumio-ven-ctl status | grep -E '(running|suspend)'"
+      register: ven_status
+      failed_when: ven_status.rc > 1
+
+    - name: "Print VEN status"
+      debug:
+          msg: "{{ ven_status.stdout_lines }}"
+
+- name: "Check VEN state"
+  block:
+    - name: "Agent state check"
+      shell: "/opt/illumio_ven/illumio-ven-ctl status | grep 'Agent state'"
+      register: ven_state
+      failed_when: "'unpaired' in ven_state.stdout"
+
+    - name: "Print VEN state"
+      debug:
+          msg: "{{ ven_state.stdout_lines }}"
+
+  always:
+    - name: "VEN version"
+      shell: "cat /opt/illumio_ven_data/etc/agent_version"
+      register: ven_version
+
+    - name: "Print VEN version"
+      debug:
+          msg: "{{ ven_version.stdout_lines }}"
+      

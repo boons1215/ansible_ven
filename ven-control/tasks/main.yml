@@ -1,0 +1,61 @@
+---
+# tasks file for ven-control
+- name: "Restart the VEN"
+  block:
+    - name: "Restarting VEN"
+      shell: "/opt/illumio_ven/illumio-ven-ctl restart"
+      register: ven_restart
+    - include: ven_status.yml
+  tags: [ never, ven_restart ]
+  become: true
+
+- name: "Stop the VEN"
+  block:
+    - name: "Stopping VEN"
+      shell: "/opt/illumio_ven/illumio-ven-ctl stop"
+      register: ven_stop
+    - include: ven_status.yml
+  tags: [ never, ven_stop ]
+  become: true
+
+- name: "Display the VEN status only"
+  block:
+    - import_tasks: ven_status.yml
+  tags: ven_status
+  become: true
+
+- name: "Suspend the VEN"
+  block:
+    - name: "Suspending VEN"
+      shell: "/opt/illumio_ven/illumio-ven-ctl suspend"
+      register: ven_suspend
+    - include: ven_status.yml
+  tags: [ never, ven_suspend ]
+  become: true
+
+- name: "Unsuspend the VEN"
+  block:
+    - name: "Unsuspending VEN"
+      shell: "/opt/illumio_ven/illumio-ven-ctl unsuspend"
+      register: ven_unsuspend
+    - include: ven_status.yml
+  tags: [ never, ven_unsuspend ]
+  become: true
+
+- name: "Deactivate the VEN"
+  block:
+    - name: "Deactivating VEN"
+      shell: "/opt/illumio_ven/illumio-ven-ctl deactivate"
+      register: ven_deactivate
+    - include: ven_status.yml
+  tags: [ never, ven_deactivate ]
+  become: true
+
+- name: "Unpair the VEN"
+  block:
+    - name: "Unpairing VEN"
+      shell: "/opt/illumio_ven/illumio-ven-ctl unpair saved"
+      register: ven_unpair
+    - include: ven_status.yml
+  tags: [ never, ven_unpair ]
+  become: true

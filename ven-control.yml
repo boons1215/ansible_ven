@@ -1,0 +1,5 @@
+---
+- hosts: workloads
+  become: true
+  roles:
+    - ven-control

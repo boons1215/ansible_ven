@@ -1,0 +1,56 @@
+---
+package_names:
+  - illumio-ven
+
+env_variables:
+  - http_proxy
+
+debian_dependency_names:
+  - curl 
+  - net-tools
+  - dnsutils
+  - uuid-runtime
+  - ipset
+  - iptables 
+  - libnfnetlink0
+  - libmnl0
+  - libcap2
+  - libgmp10
+  - apt-transport-https
+  - sed
+
+ubuntu_dependency_names:
+  - curl 
+  - net-tools
+  - dnsutils
+  - uuid-runtime
+  - ipset
+  - iptables 
+  - libnfnetlink0
+  - libmnl0
+  - libcap2
+  - libgmp10
+  - sed
+
+redhat_dependency_names:
+  - curl 
+  - net-tools
+  - bind-utils
+  - iptables 
+  - ipset
+  - libnfnetlink
+  - libmnl
+  - libcap
+  - gmp
+  - sed
+
+sles_dependency_names:
+  - curl 
+  - net-tools
+  - bind-utils
+  - iptables 
+  - ipset
+  - libnfnetlink0
+  - libmnl0
+  - libcap2
+  - sed

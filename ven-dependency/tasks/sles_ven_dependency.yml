@@ -1,0 +1,24 @@
+---
+- name: "Install OS package dependencies for VEN"
+  block:
+    - name: "Check OS packages dependencies on workloads that going to install VEN"
+      command: rpm -q "{{ item }}"
+      with_items: "{{ sles_dependency_names }}"
+      register: dependency_check
+      failed_when: dependency_check.rc > 0
+      changed_when: dependency_check.rc > 0
+
+  always:
+    - name: "Installing {{ sles_dependency_names }}"
+      zypper:
+        name: "{{ sles_dependency_names }}"
+        state: present
+      register: packages
+
+    - debug:
+        msg: 
+          - "The following NEW packages have be installed:"
+          - "{{ packages.stdout_lines[4] }}"
+      when: packages.stdout is defined
+  when: ansible_facts['distribution'] == "SLES"
+  become: true
