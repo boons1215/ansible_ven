@@ -1,5 +1,6 @@
+#For VEN version 21.2 and above
 
-<h2>1. ven-control </h2>
+#1. ven-control 
 Syntax with private key: 
     - # ansible-playbook ven-control.yml -i inventory.txt -u ec2-user --private-key apaclabkey.pem    
 Syntax with password: 
@@ -19,12 +20,12 @@ If need to run a specific function, use:
     - # ansible-playbook ven-control.yml -i inventory.txt -u ec2-user --private-key apaclabkey.pem --tags ven_restart 
 
 
-<h2>2. ven-dependency-install</h2>
+#2. ven-dependency-install
 This will check if any VEN required package dependecies missing and try to install the missing one.
     - # ansible-playbook ven-dependency-install.yml -i inventory.txt -u ec2-user --private-key apaclabkey.pem 
 
 
-<h2>3. ven-pairing</h2>
+#3. ven-pairing
 This will install based on the OS version, it will not process if one of the required packaes are missing.
     - # ansible-playbook ven-pairing.yml -i inventory.txt -u ec2-user --private-key apaclabkey.pem 
 
