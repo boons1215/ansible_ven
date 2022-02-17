@@ -15,6 +15,7 @@ Syntax with password:
 
 Default: Check if workload has VEN and display status
 Function:
+```
     - ven_restart
     - ven_stop
     - ven_status
@@ -22,6 +23,7 @@ Function:
     - ven_unsuspend
     - ven_deactivate
     - ven_unpair
+```
 
 If need to run a specific function, use:
 ```
