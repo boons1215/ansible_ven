@@ -13,7 +13,7 @@ Syntax with password:
 # ansible-playbook ven-control.yml -i inventory.txt -u ec2-user --ask-become-pass
 ```
 
-Default: Check if workload has VEN and display status
+Default: Check if workload has VEN installed, display status or running related VEN functions.
 Function:
 ```
     - ven_restart
