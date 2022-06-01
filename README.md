@@ -1,6 +1,6 @@
 # For VEN version 21.2 and above (For Linux Only)
 
-* First generate a pairing script for PCE, and paste in the ven-pairing/templates/pairing_script.sh                     
+First you have to generate a pairing script for PCE, and paste in the ven-pairing/templates/pairing_script.sh                     
 
 # 1. ven-control 
 Syntax with private key: 
