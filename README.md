@@ -37,7 +37,7 @@ ansible-playbook ven-dependency-install.yml -i inventory.txt -u ec2-user --priva
 ```
 
 # 3. ven-pairing
-This installs based on the OS version, it will not process if one of the required packages are missing.
+Install a VEN based on the OS version, it will not process if one of the required packages are missing.
 ```
 ansible-playbook ven-pairing.yml -i inventory.txt -u ec2-user --private-key apaclabkey.pem 
 ```
